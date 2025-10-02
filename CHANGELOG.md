@@ -11,9 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Convert exported `JSON` file from `Trello` to `dododo` files in `md` format and corresponding data structure
+- Convert exported `JSON` file from `Trello` to `cupidone` files in `md` format and corresponding data structure
 
-[Unreleased]: https://github.com/vikian050194/dododo/compare/v0.1.0...HEAD
-[0.3.0]: https://github.com/vikian050194/dododo/compare/v0.2.0...v0.3.0
-[0.2.0]: https://github.com/vikian050194/dododo/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/vikian050194/dododo/releases/tag/v0.1.0
+[Unreleased]: https://github.com/vikian050194/cupidone/compare/v0.1.0...HEAD
+[0.3.0]: https://github.com/vikian050194/cupidone/compare/v0.2.0...v0.3.0
+[0.2.0]: https://github.com/vikian050194/cupidone/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/vikian050194/cupidone/releases/tag/v0.1.0
