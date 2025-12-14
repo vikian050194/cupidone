@@ -1,67 +1,11 @@
 import os
 import json
 
-from dataclasses import dataclass
 from sys import argv
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Set
 
-
-@dataclass
-class Label():
-    id: str
-    name: str
-
-
-@dataclass
-class ChecklistItem():
-    id: str
-    name: str
-    state: str
-
-
-@dataclass
-class Checklist():
-    id: str
-    name: str
-    checkItems: List[ChecklistItem]
-
-
-@dataclass
-class State():
-    id: str
-    name: str
-
-
-@dataclass
-class Card():
-    id: str
-    name: str
-    desc: str
-    idState: str
-    idChecklists: List[str]
-    idLabels: List[str]
-
-
-@dataclass
-class Action():
-    id: str
-    type: str
-    date: str
-    cardId: Optional[str] = None
-    stateBefore: Optional[str] = None
-    stateAfter: Optional[str] = None
-
-
-legend = [
-    "🔵 - backlog",
-    "⚪ - to do",
-    "🟡 - in progress",
-    "🟢 - done",
-    "⭕ - outdated"
-]
-
-app_name = "cupidone"
-app_version = "0.1.0"
+from dc import *
+from common import *
 
 
 def run(source_file_name: str) -> None:
@@ -82,18 +26,18 @@ def run(source_file_name: str) -> None:
 
     checklists: List[Checklist] = []
     for c in values["checklists"]:
-        checkItems: List[ChecklistItem] = []
+        check_items: List[ChecklistItem] = []
         for item in c["checkItems"]:
             checkItem = ChecklistItem(
                 id=item["id"],
                 name=item["name"],
                 state=item["state"]
             )
-            checkItems.append(checkItem)
+            check_items.append(checkItem)
         checklist = Checklist(
             id=c["id"],
             name=c["name"],
-            checkItems=checkItems
+            checkItems=check_items
         )
         checklists.append(checklist)
         print(checklist)
@@ -140,45 +84,37 @@ def run(source_file_name: str) -> None:
     print(types)
 
     items = []
-    statesEmojies = {
-        "backlog": "🔵",
-        "todo": "⚪",
-        "in progress": "🟡",
-        "done": "🟢",
-        "outdated": "⭕"
-    }
-    statesMap = {s.id: s.name for s in states}
-    labelsMap = {l.id: l.name for l in labels}
-    checklistsMap = {c.id: c for c in checklists}
+    states_map = {s.id: s.name for s in states}
+    labels_map = {l.id: l.name for l in labels}
+    checklists_map = {c.id: c for c in checklists}
 
-    createdAt = {}
+    created_at = {}
     for action in actions:
-        if action.type in ["createCard", "copyCard"] and action.cardId not in createdAt:
-            createdAt[action.cardId] = action.date
+        if action.type in ["createCard", "copyCard"] and action.cardId not in created_at:
+            created_at[action.cardId] = action.date
 
-    cards.sort(key=lambda c: createdAt[c.id])
+    cards.sort(key=lambda c: created_at[c.id])
 
-    dir = "todo"
-    if not os.path.exists(dir):
-        os.makedirs(dir)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     for i, card in enumerate(cards, start=1):
-        fileName = f"{dir}/{i:04}.md"
-        stateName = statesMap[card.idState]
-        stateEmoji = statesEmojies[stateName]
-        item = f"{stateEmoji} [{card.name}]({fileName})"
+        file_name = f"{output_dir}/{i:04}.md"
+        state_name = states_map[card.idState]
+        state_emoji = state_emojies_map[state_name]
+        item = f"{state_emoji} [{card.name}]({file_name})"
         items.append(item)
-        with open(fileName, "w") as f:
+        with open(file_name, "w") as f:
             f.write(f"# {card.name}\n")
             f.write("\n")
-            f.write(f"Created at: `{createdAt[card.id]}`\n")
+            f.write(f"Created at: `{created_at[card.id]}`\n")
             f.write("\n")
             f.write(f"Type: ")
-            f.write(", ".join([f"`{labelsMap[idLabel]}`" for idLabel in card.idLabels]))
+            f.write(", ".join([f"`{labels_map[idLabel]}`" for idLabel in card.idLabels]))
             f.write("\n")
             f.write("\n")
             f.write(f"State: ")
-            f.write(f"`{statesMap[card.idState]}`\n")
+            f.write(f"`{states_map[card.idState]}`\n")
             f.write("\n")
             f.write(f"## Description\n")
             if card.desc:
@@ -187,22 +123,22 @@ def run(source_file_name: str) -> None:
                 f.write("empty\n")
             f.write("\n")
             f.write(f"## Checklist\n")
-            for checklistId in card.idChecklists:
-                checklist = checklistsMap[checklistId]
-                checkItems = checklist.checkItems
+            for checklist_id in card.idChecklists:
+                checklist = checklists_map[checklist_id]
+                check_items = checklist.checkItems
                 f.write(f"### {checklist.name}\n")
-                for i, item in enumerate(checkItems):
-                    stateChar = ""
+                for i, item in enumerate(check_items):
+                    state_char = ""
                     if item.state == "incomplete":
-                        stateChar = "⚪"
+                        state_char = "⚪"
                     elif item.state == "complete":
-                        stateChar = "🟢"
+                        state_char = "🟢"
                     else:
                         print(f"unexpected state - {item.state}")
-                    if i < len(checkItems) - 1:
-                        f.write(f"{stateChar} {item.name}\\\n")
+                    if i < len(check_items) - 1:
+                        f.write(f"{state_char} {item.name}\\\n")
                     else:
-                        f.write(f"{stateChar} {item.name}\n")
+                        f.write(f"{state_char} {item.name}\n")
             if not card.idChecklists:
                 f.write("empty\n")
 

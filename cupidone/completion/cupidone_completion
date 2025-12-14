@@ -1,0 +1,28 @@
+#/usr/bin/env bash
+
+DEBUG=0
+
+function _cupidone_completions()
+{
+  [ $DEBUG -eq 1 ] && echo;
+
+  totalLen=${#COMP_WORDS[@]}
+  [ $DEBUG -eq 1 ] && echo "totalLen:$totalLen"
+
+  for (( i=0; i<$totalLen; i++ ));
+  do
+    [ $DEBUG -eq 1 ] && echo "$i:${COMP_WORDS[$i]}"
+  done
+
+  local argumentsToComplete=("${COMP_WORDS[@]:1}")
+  [ $DEBUG -eq 1 ] && echo "argumentsToComplete:${argumentsToComplete[@]}"
+
+  local completionOptions=($(cupidone complete ${argumentsToComplete[@]}))
+  [ $DEBUG -eq 1 ] && echo "completionOptions:${completionOptions[@]}"
+
+  COMPREPLY=(${completionOptions[@]})
+
+  return 0;
+}
+
+complete -F _cupidone_completions cupidone

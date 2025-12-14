@@ -1,9 +1,18 @@
 # TODO
 
-## Todo
+## 🧭 Legend
+🔵 - backlog\
+⚪ - to do\
+🟡 - in progress\
+🟢 - done\
+⭕ - outdated
 
-- [ ] Initial `Trello` to `dododo` converter version
+## 📋 Issues
+🟢 [Converter from Trello to cupidone.md](todo/0001.md)\
+🟢 [Build todo.md by todo items](todo/0002.md)\
+⚪ [Add command to add new issue](todo/0003.md)\
+⚪ [HTML converter](todo/0004.md)\
+⚪ [Release package](todo/0005.md)\
+⚪ [Converter from vanilla md to cupidone.md](todo/0006.md)
 
-## Backlog
-
-Empty
+<!-- cupidone v0.2.0 -->
