@@ -1,0 +1,48 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run all unit tests",
+            "type": "shell",
+            "group": "test",
+            "command": "python3 -m unittest discover -t=${workspaceFolder} -s=tests -p=test_*.py",
+            "options": {
+                "cwd": "cupidone"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": false
+            }
+        },
+        {
+            "label": "Run all unit tests verbose",
+            "type": "shell",
+            "group": "test",
+            "command": "python3 -m unittest discover -t=${workspaceFolder} -s=tests -p=test_*.py -v",
+            "options": {
+                "cwd": "cupidone"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": false
+            }
+        },
+        {
+            "label": "Build package",
+            "type": "shell",
+            "group": "build",
+            "command": "pip3 install .",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": false
+            },
+            "problemMatcher": []
+        }
+    ]
+}

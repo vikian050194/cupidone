@@ -2,20 +2,20 @@ import os
 import re
 
 from sys import argv
-from typing import Any, Dict, List, Set
+from typing import Dict, List
 
 from dc import *
 from common import *
 
 
 def run(source_dir_name: str) -> None:
-    files = os.listdir(source_dir_name)
+    files = os.listdir(os.path.join(source_dir_name, output_dir))
     files = filter(lambda x: re.fullmatch(pattern="\d{4}\.md", string=x), files)
     files = sorted(files)
     values: Dict[str, List[str]] = dict()
 
     for file in files:
-        relative_file_name = os.path.join(source_dir_name, file)
+        relative_file_name = os.path.join(source_dir_name, output_dir, file)
         with open(relative_file_name, "r") as fr:
             values[file] = fr.readlines()
 
@@ -25,14 +25,14 @@ def run(source_dir_name: str) -> None:
     items = []
 
     for key, value in values.items():
-        file_name = os.path.join(source_dir_name, key)
+        file_name = os.path.join(output_dir, key)
         card_name = value[0].removeprefix("# ").removesuffix("\n")
         state_name = value[6].removeprefix("State: `").removesuffix("`\n")
         state_emoji = state_emojies_map[state_name]
         item = f"{state_emoji} [{card_name}]({file_name})"
         items.append(item)
 
-    with open("TODO.md", "w") as f:
+    with open(os.path.join(source_dir_name, "TODO.md"), "w") as f:
         f.write("# TODO\n")
         f.write("\n")
         f.write("## 🧭 Legend\n")
@@ -55,7 +55,3 @@ def run(source_dir_name: str) -> None:
 
     for item in items:
         print(item)
-
-
-if __name__ == '__main__':
-    run(source_dir_name=output_dir)
