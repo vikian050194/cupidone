@@ -2,33 +2,26 @@ from typing import List
 
 from cupidone.controllers.composite import CompositeController
 from cupidone.controllers.build import BuildController
-from cupidone.controllers.migration import *
+from cupidone.controllers.migration import MigrationController
 from cupidone.controllers.version import VersionController
 from cupidone.controllers.help import HelpController
-from cupidone.managers import ProjectManager, TimeManager, OutputManager
+from cupidone.managers import FileManager, TimeManager, OutputManager
 from cupidone.configuration import Configuration
 from cupidone.options import Options
 
 
 def main(options: List[str], configuration: Configuration):
     tm = TimeManager()
-    pm = ProjectManager(tm, configuration)
+    fm = FileManager(tm, configuration)
     om = OutputManager(configuration)
 
     # TODO improve defaults mechanism
     defaults = dict()
 
-    build_controller = BuildController(pm, tm)
-
-    # TODO move internal controllers inside MigrationController
-    migration_subs = [
-        MigrationTrelloController(pm, tm)
-    ]
-    migration_controller = MigrationController(pm, tm, migration_subs)
-
-    version_controller = VersionController(pm, tm)
-
-    help_controller = HelpController(pm, tm)
+    build_controller = BuildController(fm, tm)
+    migration_controller = MigrationController(fm, tm)
+    version_controller = VersionController(fm, tm)
+    help_controller = HelpController(fm, tm)
 
     controllers = [
         build_controller,
@@ -37,7 +30,7 @@ def main(options: List[str], configuration: Configuration):
         help_controller
     ]
 
-    root_controller = CompositeController(pm, tm, controllers)
+    root_controller = CompositeController(fm, tm, controllers)
 
     command = None
     

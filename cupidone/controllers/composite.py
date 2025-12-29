@@ -2,7 +2,7 @@ from typing import List
 
 from cupidone.controllers.abstract import AbstractController
 from cupidone.controllers.base import BaseController
-from cupidone.managers.project_manager import ProjectManager
+from cupidone.managers.file_manager import FileManager
 from cupidone.managers.time_manager import TimeManager
 from cupidone.options import Options
 from cupidone.views.base import AbstractView, ListView
@@ -10,8 +10,8 @@ from cupidone.views.message import ErrorView
 
 
 class CompositeController(BaseController):
-    def __init__(self, pm: ProjectManager, tm: TimeManager, cs: List[AbstractController]):
-        super().__init__(pm, tm, cs)
+    def __init__(self, fm: FileManager, tm: TimeManager, cs: List[AbstractController]):
+        super().__init__(fm, tm, cs)
         self.handlers = {}
         for c in cs:
             for key in c.keys():

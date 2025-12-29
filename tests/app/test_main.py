@@ -52,7 +52,7 @@ class TestMain(TestCase):
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 2
+        expected_invocations = 4
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("help")
         mock_print.reset_mock()

@@ -107,7 +107,6 @@ def value_decorator(f):
 
 app_name = "cupidone"
 app_version = "0.2.0"
-output_dir = "todo"
 
 legend = [
     "🔵 - backlog",
@@ -140,7 +139,6 @@ class BaseConverter():
 __all__ = [
     "app_name",
     "app_version",
-    "output_dir",
     "legend",
     "state_emojies_map"
 ]

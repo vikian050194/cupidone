@@ -46,3 +46,23 @@ class Action():
     cardId: Optional[str] = None
     stateBefore: Optional[str] = None
     stateAfter: Optional[str] = None
+
+
+@dataclass
+class ChecklistItem():
+    name: str
+    state_name: str
+    state_emoji: str
+
+
+@dataclass
+class CompiledCard():
+    file_name: str
+    name: str
+    desc: str
+    state_name: str
+    state_emoji: str
+    checklist_name: Optional[str]
+    checklist: List[ChecklistItem]
+    types: List[str]
+    created_at: str

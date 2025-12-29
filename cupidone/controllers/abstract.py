@@ -1,14 +1,14 @@
 import abc
 from typing import List
 
-from cupidone.managers import ProjectManager, TimeManager
+from cupidone.managers import FileManager, TimeManager
 from cupidone.options import Options
 from cupidone.views.base import AbstractView
 
 
 class AbstractController(abc.ABC):
-    def __init__(self, pm: ProjectManager, tm: TimeManager):
-        self.pm = pm
+    def __init__(self, fm: FileManager, tm: TimeManager):
+        self.fm = fm
         self.tm = tm
 
     @abc.abstractmethod
