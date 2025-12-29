@@ -116,7 +116,7 @@ legend = [
     "⭕ - outdated"
 ]
 
-state_emojies_map = {
+card_state_emojies_map = {
     "backlog": "🔵",
     "todo": "⚪",
     "in progress": "🟡",
@@ -124,6 +124,10 @@ state_emojies_map = {
     "outdated": "⭕"
 }
 
+checklist_state_emojies_map = {
+    "incomplete": "⚪",
+    "complete": "🟢"
+}
 
 class BaseConverter():
     def __init__(self):
@@ -140,5 +144,5 @@ __all__ = [
     "app_name",
     "app_version",
     "legend",
-    "state_emojies_map"
+    "card_state_emojies_map"
 ]

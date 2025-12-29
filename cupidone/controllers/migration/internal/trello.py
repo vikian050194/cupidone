@@ -1,5 +1,3 @@
-import os
-
 from typing import List, Set
 
 from cupidone.dc import *
@@ -38,12 +36,12 @@ class MigrationTrelloController(AbstractController):
                     state=item["state"]
                 )
                 check_items.append(checkItem)
-            checklist = Checklist(
+            cc_checklist = Checklist(
                 id=c["id"],
                 name=c["name"],
                 checkItems=check_items
             )
-            checklists.append(checklist)
+            checklists.append(cc_checklist)
 
         states: List[State] = []
         for c in values["lists"]:
@@ -66,7 +64,7 @@ class MigrationTrelloController(AbstractController):
             cards.append(card)
 
         actions: List[Action] = []
-        types: Set[str] = set()
+        cc_types: Set[str] = set()
         for a in values["actions"]:
             action = Action(
                 id=a["id"],
@@ -79,8 +77,8 @@ class MigrationTrelloController(AbstractController):
                 action.stateBefore = a["data"]["listBefore"]
                 action.stateAfter = a["data"]["listAfter"]
             actions.append(action)
-            if action.type not in types:
-                types.add(action.type)
+            if action.type not in cc_types:
+                cc_types.add(action.type)
 
         states_map = {s.id: s.name for s in states}
         labels_map = {l.id: l.name for l in labels}
@@ -97,44 +95,37 @@ class MigrationTrelloController(AbstractController):
 
         results: List[CompiledCard] = []
         for i, card in enumerate(cards, start=1):
-            file_name = f"{i:04}.md"
-            state_name = states_map[card.idState]
-            state_emoji = state_emojies_map[state_name]
-            # TODO use relative path
-            name = card.name
-            created_at = created_at[card.id]
-            types = [labels_map[idLabel] for idLabel in card.idLabels]
-            desc = card.desc
+            cc_file_name = f"{i:04}.md"
+            cc_state_name = states_map[card.idState]
+            cc_name = card.name
+            cc_created_at = created_at[card.id]
+            cc_types = [labels_map[idLabel] for idLabel in card.idLabels]
+            cc_desc = card.desc
             if len(card.idChecklists) > 1:
-                return ErrorView("only one checklist is supported")
-            checklist_name = None
-            checklist: List[ChecklistItem] = []
+                return ErrorView(f"only one checklist is supported - {card.name}")
+            cc_checklist_name = None
+            cc_checklist: List[ChecklistItem] = []
             if card.idChecklists:
-                checklistFoo = checklists_map[card.idChecklists[0]]
-                check_items = checklistFoo.checkItems
+                first_checklist = checklists_map[card.idChecklists[0]]
+                cc_checklist_name = first_checklist.name
+                check_items = first_checklist.checkItems
                 for i, item in enumerate(check_items):
-                    state_char = ""
-                    if item.state == "incomplete":
-                        state_char = "⚪"
-                    elif item.state == "complete":
-                        state_char = "🟢"
-                    else:
-                        return ErrorView(f"unexpected state - {item.state}")
-                    checklist.append(ChecklistItem(
+                    cc_checklist.append(CompiledChecklistItem(
                         name=item.name,
-                        state_name=item.state,
-                        state_emoji=state_char
+                        state_name=item.state
                     ))
             results.append(CompiledCard(
-                file_name=file_name,
-                name=name,
-                desc=desc,
-                state_name=state_name,
-                state_emoji=state_emoji,
-                checklist_name=checklist_name,
-                checklist=checklist,
-                types=types,
-                created_at=created_at
+                file_name=cc_file_name,
+                name=cc_name,
+                desc=cc_desc,
+                state_name=cc_state_name,
+                checklist_name=cc_checklist_name,
+                checklist=cc_checklist,
+                types=cc_types,
+                created_at=cc_created_at
             ))
+
+        for cc in results:
+            model.add_card(cc)
 
         return model.build_project()
