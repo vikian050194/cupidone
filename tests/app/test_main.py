@@ -79,6 +79,17 @@ class TestMain(TestCase):
         mock_print.assert_called_with("help")
         mock_print.reset_mock()
 
+    # TODO move to unit tests
+    def test_complete_migration_trello(self, mock_print):
+        complete = ["complete", "migration", "t"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("trello")
+        mock_print.reset_mock()
+
     def test_help(self, mock_print):
         help = ["help"]
 
