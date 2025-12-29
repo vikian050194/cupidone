@@ -58,7 +58,7 @@ def readme():
 
 attrs = dict(
     name="cupidone",
-    version="0.2.0",
+    version="0.3.0",
     description="CLI todo list manager",
     long_description=readme(),
     classifiers=[

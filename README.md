@@ -57,7 +57,43 @@ pip install -e .
 
 ## Usage
 
-In general invocation has following format `cupidone [COMMAND] [OPTIONS]`
+In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTIONS]`
+
+### Help
+
+Format: `cupidone [COMMAND]`
+
+| Command | Description |
+| --- | --- |
+| `help` | Help information |
+| `version` | Installed version |
+
+**Build**
+
+Format: `cupidone build`
+
+This command (re)builds `README.md` according to the cards from `todo` directory
+
+**Migration**
+
+Format: `cupidone migration [OPTION] [VALUE]`
+
+| Option | Description |
+| --- | --- |
+| `trello` | Trello kanban project as source |
+
+One value is required - path to exported `JSON` file
+
+### Configuration
+
+There in one way/layer of configuration
+
+**Environment variables**
+
+| Name | Description | Value |
+| --- | --- | --- |
+| `PWD` | Project directory where `README.md` file and `todo` directory are stored | Any valid path |
+| `CUPIDONE_OUTPUT` | Output format | `human`, `plain` or `json` |
 
 ## Tests
 
@@ -74,6 +110,11 @@ or
 ```
 
 ### Coverage
+
+Install requrements
+```
+pip install -r requirements.txt
+```
 
 Generate coverage results
 ```
