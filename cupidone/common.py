@@ -106,7 +106,7 @@ def value_decorator(f):
 
 
 app_name = "cupidone"
-app_version = "0.2.0"
+app_version = "0.3.0"
 
 legend = [
     "🔵 - backlog",
