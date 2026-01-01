@@ -1,0 +1,25 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - "*"
+      - "!master"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      OS: ubuntu-latest
+      PYTHON: '3.9'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@master
+      with:
+        python-version: 3.9
+
+    - name: Run Tests
+      run: python3 -m unittest
