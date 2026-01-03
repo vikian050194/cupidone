@@ -12,6 +12,7 @@ class HelpController(AbstractController):
 
     def handle(self, options: Options) -> AbstractView:
         lines = []
+        lines.append((Commands.INIT, "to init new project"))
         lines.append((Commands.BUILD, "to build TODO.md"))
         lines.append((Commands.MIGRATION, "to migrate items"))
         lines.append((Commands.VERSION, "get version"))

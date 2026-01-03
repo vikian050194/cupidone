@@ -1,11 +1,7 @@
 from typing import List
 
-from cupidone.controllers.composite import CompositeController
-from cupidone.controllers.build import BuildController
-from cupidone.controllers.migration import MigrationController
-from cupidone.controllers.version import VersionController
-from cupidone.controllers.help import HelpController
-from cupidone.managers import FileManager, TimeManager, OutputManager
+from cupidone.controllers import *
+from cupidone.managers import *
 from cupidone.configuration import Configuration
 from cupidone.options import Options
 
@@ -18,12 +14,14 @@ def main(options: List[str], configuration: Configuration):
     # TODO improve defaults mechanism
     defaults = dict()
 
+    init_controller = InitController(fm, tm)
     build_controller = BuildController(fm, tm)
     migration_controller = MigrationController(fm, tm)
     version_controller = VersionController(fm, tm)
     help_controller = HelpController(fm, tm)
 
     controllers = [
+        init_controller,
         build_controller,
         migration_controller,
         version_controller,

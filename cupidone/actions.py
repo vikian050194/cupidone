@@ -3,6 +3,7 @@ import enum
 
 @enum.unique
 class Commands(str, enum.Enum):
+    INIT = "init"
     BUILD = "build"
     MIGRATION = "migration"
     HELP = "help"

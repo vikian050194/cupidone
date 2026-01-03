@@ -14,7 +14,7 @@
 ⚪ [HTML converter](todo/0004.md)\
 ⚪ [Release package](todo/0005.md)\
 ⚪ [Converter from vanilla md to cupidone.md](todo/0006.md)\
-⚪ [Add command to init empty project](todo/0007.md)\
+🟢 [Add command to init empty project](todo/0007.md)\
 🟢 [Make CLI](todo/0008.md)
 
-<!-- cupidone v0.3.0 -->
+<!-- cupidone v0.4.0 -->

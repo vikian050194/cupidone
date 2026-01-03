@@ -9,9 +9,10 @@ from .base import AbstractModel
 
 
 class ProjectModel(AbstractModel):
-    def initialize_new_project(self):
-        self.fm.initialize_new_project()
+    def init_project(self) -> AbstractView:
+        self.fm.init_project()
         self._save_todo(cards=[])
+        return InfoView(f"new project is initialized")
 
     def build_project(self):
         cards = []

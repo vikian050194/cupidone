@@ -68,13 +68,21 @@ Format: `cupidone [COMMAND]`
 | `help` | Help information |
 | `version` | Installed version |
 
-**Build**
+### Initialize
+
+Format: `cupidone init`
+
+This command creates `TODO.md` and empty `todo` directory
+
+### Build
 
 Format: `cupidone build`
 
-This command (re)builds `README.md` according to the cards from `todo` directory
+This command (re)builds `TODO.md` according to the cards from `todo` directory
 
-**Migration**
+### Migration
+
+To migrate from different sources
 
 Format: `cupidone migration [OPTION] [VALUE]`
 

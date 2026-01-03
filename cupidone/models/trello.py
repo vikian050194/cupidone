@@ -2,7 +2,6 @@ from typing import List, Set
 
 from cupidone.dc import *
 from cupidone.views.base import AbstractView
-from cupidone.views.message import ErrorView
 
 from .project import ProjectModel
 
@@ -124,7 +123,7 @@ class TrelloMigrator():
     def migrate(self, filename: str) -> AbstractView:
         cards = self.get_compiled_cards(filename)
 
-        self.pm.initialize_new_project()
+        self.pm.init_project()
 
         for card in cards:
             self.pm.add_card(card)

@@ -21,7 +21,7 @@ def to_action(data):
 
 class AbstractFileManager(abc.ABC):
     @abc.abstractmethod
-    def initialize_new_project(self):
+    def init_project(self):
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -52,7 +52,7 @@ class FileManager(AbstractFileManager):
         self._cards_dir = "todo"
         self._toc_file_name = "TODO.md"
 
-    def initialize_new_project(self):
+    def init_project(self):
         if not os.path.exists(self._full_cards_dir_path):
             os.makedirs(self._full_cards_dir_path)
 
@@ -79,7 +79,6 @@ class FileManager(AbstractFileManager):
         return os.path.join(self._project_dir, self._toc_file_name)
 
     def get_cards_map(self):
-        # TODO use list instead of dict to keep order
         files = os.listdir(self._full_cards_dir_path)
         files = filter(lambda x: re.fullmatch(pattern="\d{4}\.md", string=x), files)
         files = sorted(files)
