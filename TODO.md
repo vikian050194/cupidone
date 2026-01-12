@@ -17,4 +17,4 @@
 🟢 [Add command to init empty project](todo/0007.md)\
 🟢 [Make CLI](todo/0008.md)
 
-<!-- cupidone v0.4.0 -->
+<!-- cupidone v0.5.0 -->

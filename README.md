@@ -74,6 +74,12 @@ Format: `cupidone init`
 
 This command creates `TODO.md` and empty `todo` directory
 
+### Add
+
+Format: `cupidone add`
+
+This command creates new empty card in the `todo` directory
+
 ### Build
 
 Format: `cupidone build`

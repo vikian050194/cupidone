@@ -1,5 +1,5 @@
-from unittest import TestCase, skip
-from unittest.mock import patch, call
+from unittest import TestCase
+from unittest.mock import patch
 from tempfile import TemporaryDirectory
 
 from cupidone.main import main
@@ -52,7 +52,7 @@ class TestMain(TestCase):
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 5
+        expected_invocations = 6
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("help")
         mock_print.reset_mock()
@@ -80,8 +80,30 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
     # TODO move to unit tests
+    def test_complete_build(self, mock_print):
+        complete = ["complete", "b"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("build")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_add(self, mock_print):
+        complete = ["complete", "a"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("add")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
     def test_complete_init(self, mock_print):
-        complete = ["complete", "migration", "i"]
+        complete = ["complete", "i"]
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
@@ -106,6 +128,6 @@ class TestMain(TestCase):
 
         self.call(help)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 5
+        expected_invocations = 6
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.reset_mock()

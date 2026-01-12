@@ -15,6 +15,7 @@ def main(options: List[str], configuration: Configuration):
     defaults = dict()
 
     init_controller = InitController(fm, tm)
+    add_controller = AddController(fm, tm)
     build_controller = BuildController(fm, tm)
     migration_controller = MigrationController(fm, tm)
     version_controller = VersionController(fm, tm)
@@ -22,6 +23,7 @@ def main(options: List[str], configuration: Configuration):
 
     controllers = [
         init_controller,
+        add_controller,
         build_controller,
         migration_controller,
         version_controller,

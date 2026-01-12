@@ -4,6 +4,7 @@ import enum
 @enum.unique
 class Commands(str, enum.Enum):
     INIT = "init"
+    ADD = "add"
     BUILD = "build"
     MIGRATION = "migration"
     HELP = "help"

@@ -3,7 +3,7 @@ import builtins
 from datetime import date, datetime, time, timedelta
 
 from cupidone.views import MessageView
-from cupidone.common import date_to_yms, dt_to_iso, time_to_hms, timedelta_to_hms
+from cupidone.common import date_to_ymd, dt_to_iso, time_to_hms, timedelta_to_hms
 
 
 def to_str(value):
@@ -12,7 +12,7 @@ def to_str(value):
     if type(value) is timedelta:
         return timedelta_to_hms(value)
     if type(value) is date:
-        return date_to_yms(value)
+        return date_to_ymd(value)
     if type(value) is datetime:
         return dt_to_iso(value)
     return value

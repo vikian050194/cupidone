@@ -89,7 +89,8 @@ class TrelloMigrator():
         result: List[CompiledCard] = []
         for i, card in enumerate(cards, start=1):
             cc_file_name = f"{i:04}.md"
-            cc_state_name = states_map[card.idState]
+            state_name = states_map[card.idState]
+            cc_state = CardState(state_name)
             cc_name = card.name
             cc_created_at = created_at[card.id]
             cc_types = [labels_map[idLabel] for idLabel in card.idLabels]
@@ -106,13 +107,13 @@ class TrelloMigrator():
                 for i, item in enumerate(check_items):
                     cc_checklist.append(CompiledChecklistItem(
                         name=item.name,
-                        state_name=item.state
+                        state=ChecklistItemState(item.state)
                     ))
             result.append(CompiledCard(
                 file_name=cc_file_name,
                 name=cc_name,
                 desc=cc_desc,
-                state_name=cc_state_name,
+                state=cc_state,
                 checklist_name=cc_checklist_name,
                 checklist=cc_checklist,
                 types=cc_types,

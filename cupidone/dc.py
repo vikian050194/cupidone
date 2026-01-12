@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
+from .common import CardState, ChecklistItemState
+
 
 @dataclass
 class Label():
@@ -51,7 +53,7 @@ class Action():
 @dataclass
 class CompiledChecklistItem():
     name: str
-    state_name: str
+    state: ChecklistItemState
 
 
 @dataclass
@@ -59,7 +61,7 @@ class CompiledCard():
     file_name: str
     name: str
     desc: str
-    state_name: str
+    state: CardState
     checklist_name: Optional[str]
     checklist: List[CompiledChecklistItem]
     types: List[str]

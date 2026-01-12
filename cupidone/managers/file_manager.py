@@ -21,19 +21,19 @@ def to_action(data):
 
 class AbstractFileManager(abc.ABC):
     @abc.abstractmethod
-    def init_project(self):
+    def init_project(self) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def get_cards_map(self):
+    def get_cards_map(self) -> Dict[str, List[str]]:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def write_card(self):
+    def write_card(self) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod
-    def write_todo(self, lines: List[str]):
+    def write_todo(self, lines: List[str]) -> None:
         raise NotImplementedError()
 
     @abc.abstractmethod

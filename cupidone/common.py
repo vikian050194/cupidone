@@ -1,4 +1,5 @@
 from datetime import date, datetime, time, timedelta
+import enum
 
 
 def dt_to_iso(value: datetime):
@@ -10,10 +11,10 @@ def iso_to_dt(value: str):
 
 
 def dt_to_ymd(value: datetime):
-    return date_to_yms(value.date())
+    return date_to_ymd(value.date())
 
 
-def date_to_yms(value: date):
+def date_to_ymd(value: date):
     return f"{value.year:04d}-{value.month:02d}-{value.day:02d}"
 
 
@@ -28,7 +29,7 @@ def reduce_actions(reducer, actions, initial_state = None):
     return state
 
 
-class State():
+class CardState():
     def __init__(self, value=None):
         self.value = value
 
@@ -106,28 +107,55 @@ def value_decorator(f):
 
 
 app_name = "cupidone"
-app_version = "0.4.0"
+app_version = "0.5.0"
 
-legend = [
-    "🔵 - backlog",
-    "⚪ - to do",
-    "🟡 - in progress",
-    "🟢 - done",
-    "⭕ - outdated"
-]
+
+class MetaEnum(enum.EnumMeta):
+    def __contains__(cls, item):
+        try:
+            cls(item)
+        except ValueError:
+            return False
+        return True
+
+
+@enum.unique
+class CardState(str, enum.Enum, metaclass=MetaEnum):
+    BACKLOG = "backlog"
+    TODO = "to do"
+    INPROGRESS = "in progress"
+    DONE = "done"
+    OUTDATED = "outdated"
+
 
 card_state_emojies_map = {
-    "backlog": "🔵",
-    "todo": "⚪",
-    "in progress": "🟡",
-    "done": "🟢",
-    "outdated": "⭕"
+    CardState.BACKLOG: "🔵",
+    CardState.TODO: "⚪",
+    CardState.INPROGRESS: "🟡",
+    CardState.DONE: "🟢",
+    CardState.OUTDATED: "⭕"
 }
 
+
+@enum.unique
+class ChecklistItemState(str, enum.Enum):
+    INCOMPLETE = "incomplete"
+    COMPLETE = "complete"
+
+
 checklist_state_emojies_map = {
-    "incomplete": "⚪",
-    "complete": "🟢"
+    ChecklistItemState.INCOMPLETE: "⚪",
+    ChecklistItemState.COMPLETE: "🟢"
 }
+
+
+@enum.unique
+class CardType(str, enum.Enum):
+    BUG = "bug"
+    TECH = "tech"
+    BUSINESS = "business"
+    MARKETING = "marketing"
+
 
 class BaseConverter():
     def __init__(self):
@@ -143,6 +171,9 @@ class BaseConverter():
 __all__ = [
     "app_name",
     "app_version",
-    "legend",
-    "card_state_emojies_map"
+    "card_state_emojies_map",
+    "checklist_state_emojies_map",
+    "CardState",
+    "ChecklistItemState",
+    "CardType"
 ]
