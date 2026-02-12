@@ -8,6 +8,7 @@ from typing import Any, Dict, List
 
 from cupidone.card import Card
 from cupidone.configuration import Configuration
+from cupidone.printers.json import EnhancedJSONEncoder
 
 from .time_manager import AbstractTimeManager
 
@@ -57,11 +58,11 @@ class FileManager(AbstractFileManager):
             os.makedirs(self._full_cards_dir_path)
 
     def write_card(self, filename:str, lines: List[str]):
-        with open(os.path.join(self._get_full_card_path(filename)), "w") as fw:
+        with open(self._get_full_card_path(filename), "w") as fw:
             fw.writelines(lines)
 
     def write_todo(self, lines: List[str]):
-        with open(os.path.join(self._full_todo_path), "w") as fw:
+        with open(self._full_todo_path, "w") as fw:
             fw.writelines(lines)
 
     def get_relative_card_name(self, key: str):

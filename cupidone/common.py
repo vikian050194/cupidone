@@ -107,7 +107,7 @@ def value_decorator(f):
 
 
 app_name = "cupidone"
-app_version = "0.5.0"
+app_version = "0.6.0"
 
 
 class MetaEnum(enum.EnumMeta):

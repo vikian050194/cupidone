@@ -52,7 +52,7 @@ class TestMain(TestCase):
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 6
+        expected_invocations = 7
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("help")
         mock_print.reset_mock()
@@ -110,6 +110,17 @@ class TestMain(TestCase):
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("init")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_migration(self, mock_print):
+        complete = ["complete", "m"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("migration")
         mock_print.reset_mock()
 
     # TODO move to unit tests
