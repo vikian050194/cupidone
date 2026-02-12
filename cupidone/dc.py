@@ -58,9 +58,10 @@ class CompiledChecklistItem():
 
 @dataclass
 class CompiledCard():
+    id: int
     file_name: str
     name: str
-    desc: str
+    description: str
     state: CardState
     checklist_name: Optional[str]
     checklist: List[CompiledChecklistItem]

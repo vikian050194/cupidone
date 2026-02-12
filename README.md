@@ -8,8 +8,6 @@
 
 **cupidone** is a tool that can help you track progress on tasks and plan future work
 
-By the way, there is [todo list](./TODO.md).
-
 ## Motivation
 
 There are a lot of flexible and powerful UI-rich task trackers but as for me all of them are too complex and I don't need a biggest part of provided features
@@ -20,25 +18,27 @@ Python version 3.9 or higher
 
 Developed and tested on Ubuntu 20.04
 
+<!-- skip-start -->
+
 ## Installation
 
-Rigth now the best way to install **cupidone** is following one:
+**PyPI**
+
+```
+pip3 install cupidone
+```
+
+**From sources**
+
 1. Clone the repo
     ```
     git clone https://github.com/vikian050194/cupidone.git
     ```
-2. Make directory for custom bash completion scripts and grant full access for everyone (TODO: fix this dirty manual hack)
-    ```
-    mkdir "$HOME/.bash_completion.d"
-    chmod 777 "$HOME/.bash_completion.d"
-    ```
-3. Install the package globally
-
-   Privileged user is required because bash completion file will be copied to `etc` directory
+2. Install the package globally
     ```
     pip3 install .
     ```
-4. Call installed package via a generated standalone "shim" script
+3. Call installed package via a generated standalone "shim" script
     ```
     cupidone
     ```
@@ -55,9 +55,11 @@ source venv/bin/activate
 pip install -e .
 ```
 
+<!-- skip-stop -->
+
 ## Usage
 
-In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTIONS]`
+In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTIONS] [VALUE]`
 
 ### Help
 
@@ -86,6 +88,12 @@ Format: `cupidone build`
 
 This command (re)builds `TODO.md` according to the cards from `todo` directory
 
+### Dump
+
+Format: `cupidone dump`
+
+This command dump all cards from `todo` directory
+
 ### Migration
 
 To migrate from different sources
@@ -108,6 +116,8 @@ There in one way/layer of configuration
 | --- | --- | --- |
 | `PWD` | Project directory where `README.md` file and `todo` directory are stored | Any valid path |
 | `CUPIDONE_OUTPUT` | Output format | `human`, `plain` or `json` |
+
+<!-- skip-start -->
 
 ## Tests
 
@@ -155,6 +165,8 @@ or
 ```
 ./shell/coverage.sh
 ```
+
+<!-- skip-stop -->
 
 [status-url]: https://github.com/vikian050194/cupidone/pulse
 [status-badge]: https://img.shields.io/github/last-commit/vikian050194/cupidone.svg

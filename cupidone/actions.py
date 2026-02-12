@@ -7,6 +7,7 @@ class Commands(str, enum.Enum):
     ADD = "add"
     BUILD = "build"
     MIGRATION = "migration"
+    DUMP = "dump"
     HELP = "help"
     VERSION = "version"
 

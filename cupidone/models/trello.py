@@ -110,9 +110,10 @@ class TrelloMigrator():
                         state=ChecklistItemState(item.state)
                     ))
             result.append(CompiledCard(
+                id=i,
                 file_name=cc_file_name,
                 name=cc_name,
-                desc=cc_desc,
+                description=cc_desc,
                 state=cc_state,
                 checklist_name=cc_checklist_name,
                 checklist=cc_checklist,

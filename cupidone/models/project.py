@@ -2,7 +2,7 @@ from typing import List
 
 from cupidone.common import *
 from cupidone.common import dt_to_iso
-from cupidone.dc import CompiledCard
+from cupidone.dc import CompiledCard, CompiledChecklistItem
 from cupidone.views.base import AbstractView, ListView
 from cupidone.views.message import ErrorView, InfoView
 
@@ -15,23 +15,70 @@ class ProjectModel(AbstractModel):
         self._save_todo(cards=[])
         return InfoView(f"new project is initialized")
 
-    def build_project(self):
+    def _get_value(self, line: str, prefix: str, suffix: str):
+            return line.removeprefix(prefix).removesuffix(suffix)
+
+    def _find_value(self, lines: list[str], prefix: str, suffix: str):
+        for line in lines:
+            if line.startswith(prefix):
+                return self._get_value(line, prefix, suffix)
+        return None
+
+    def _get_checklist(self, lines: list[str]):
+        checklist: list[CompiledChecklistItem] = []
+        for line in lines:
+            if line.startswith("⚪ "):
+                value = self._get_value(line, "⚪ ", "\\\n")
+                checklist.append(CompiledChecklistItem(value, ChecklistItemState.INCOMPLETE))
+            elif line.startswith("🟢 "):
+                value = self._get_value(line, "🟢 ", "\\\n")
+                checklist.append(CompiledChecklistItem(value, ChecklistItemState.COMPLETE))
+        return checklist
+
+    def _get_description(self, lines: list[str]):
+        start_index = None
+        end_index = None
+        for i, line in enumerate(lines):
+            if "Description" in line:
+                start_index = i + 1
+                continue
+            if start_index is not None and "#" in line:
+                end_index = i - 1
+                break
+        description = lines[start_index:end_index]
+        description = map(lambda l: l.replace("\n", ""), description)
+        return list(description)
+
+    def _list_cards(self) -> list[CompiledCard]:
         cards = []
-        for key, value in self.fm.get_cards_map().items():
-            file_name = self.fm.get_relative_card_name(key)
-            card_name = value[0].removeprefix("# ").removesuffix("\n")
-            state_name = value[6].removeprefix("State: `").removesuffix("`\n")
+        for file_name, lines in self.fm.get_cards_map().items():
+            id = self._get_card_id(file_name)
+            full_file_name = self.fm.get_relative_card_name(file_name)
+            card_name = self._find_value(lines, "# ", "\n")
+            state_name = self._find_value(lines, "State: `", "`\n")
+            created_at = self._find_value(lines, "Created at: `", "`\n")
+            types = self._find_value(lines, "Type: ", "\n").split(", ")
+            types = map(lambda t: t.removeprefix("`").removesuffix("`"), types)
+            types = list(types)
             state = CardState(state_name)
+            checklist = self._get_checklist(lines)
+            checklist_name = self._find_value(lines, "### ", "\n")
+            description = self._get_description(lines)
             cards.append(CompiledCard(
-                file_name=file_name,
+                id=id,
+                file_name=full_file_name,
                 name=card_name,
                 state=state,
-                checklist=[],
-                checklist_name=None,
-                created_at=None,
-                desc=None,
-                types=[]
+                checklist=checklist,
+                checklist_name=checklist_name,
+                created_at= created_at,
+                description=description,
+                types=types
             ))
+        return cards
+
+    def build_project(self):
+        cards = self._list_cards()
         return self._save_todo(cards=cards)
 
     def _save_todo(self, cards: List[CompiledCard]) -> AbstractView:
@@ -82,8 +129,8 @@ class ProjectModel(AbstractModel):
         lines.append(f"State: `{card.state.value}`\n")
         lines.append("\n")
         lines.append(f"## Description\n")
-        if card.desc:
-            lines.append(f"{card.desc}\n")
+        if card.description:
+            lines.append(f"{card.description}\n")
         else:
             lines.append("empty\n")
         lines.append("\n")
@@ -106,25 +153,31 @@ class ProjectModel(AbstractModel):
     def _get_file_name(self, card_id: int) -> str:
         return f"{card_id:04d}.md"
 
+    def _get_card_id(self, file_name: str):
+        return int(file_name.removesuffix(".md"))
+
     def add_empty_card(self):
         files = self.fm.get_cards_map().keys()
         files_list = list(files)
+        new_card_id = 1
         file_name = self._get_file_name(1)
         if files_list:
             last_file = files_list[-1]
-            last_card_id = int(last_file.removesuffix(".md"))
-            file_name = self._get_file_name(last_card_id+1)
-        name = "New card title"
-        desc = "Card description"
+            last_card_id = self._get_card_id(last_file)
+            new_card_id = last_card_id + 1
+            file_name = self._get_file_name(new_card_id)
+        title = "New card title"
+        description = "Card description"
         state=CardState.BACKLOG
         checklist_name = None
         checklist = []
         types = [member.value for member in CardType]
         created_at = dt_to_iso(self.tm.get_datetime())
         empty_card = CompiledCard(
+            id=new_card_id,
             file_name=file_name,
-            name=name,
-            desc=desc,
+            name=title,
+            description=description,
             state=state,
             checklist_name=checklist_name,
             checklist=checklist,
@@ -136,6 +189,10 @@ class ProjectModel(AbstractModel):
 
     def read_json(self, filename:str):
         return self.fm.read_json(filename)
+
+    def dump(self):
+        cards = self._list_cards()
+        return ListView(list=cards)
 
 
 __all__ = ["ProjectModel"]
