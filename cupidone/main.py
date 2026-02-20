@@ -19,6 +19,7 @@ def main(options: List[str], configuration: Configuration):
     build_controller = BuildController(fm, tm)
     migration_controller = MigrationController(fm, tm)
     dump_controller = DumpController(fm, tm)
+    site_controller = SiteController(fm, tm)
     version_controller = VersionController(fm, tm)
     help_controller = HelpController(fm, tm)
 
@@ -28,6 +29,7 @@ def main(options: List[str], configuration: Configuration):
         build_controller,
         migration_controller,
         dump_controller,
+        site_controller,
         version_controller,
         help_controller
     ]
