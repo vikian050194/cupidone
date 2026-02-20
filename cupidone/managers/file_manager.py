@@ -1,6 +1,8 @@
 import abc
+import importlib
 import json
 import os
+from pkgutil import get_data
 import re
 
 from datetime import datetime
@@ -8,6 +10,7 @@ from typing import Any, Dict, List
 
 from cupidone.card import Card
 from cupidone.configuration import Configuration
+from cupidone.dc import WebData
 from cupidone.printers.json import EnhancedJSONEncoder
 
 from .time_manager import AbstractTimeManager
@@ -51,6 +54,9 @@ class FileManager(AbstractFileManager):
         self.tm = tm
         self._project_dir = configuration.directory
         self._cards_dir = "todo"
+        self._site_dir = "site"
+        self._templates_dir = "templates"
+        self._site_data_json = "data.json"
         self._toc_file_name = "TODO.md"
 
     def init_project(self):
@@ -98,5 +104,34 @@ class FileManager(AbstractFileManager):
         with open(filename, "r") as fr:
             return fr.read().splitlines()
 
+    # TODO rename function
+    def get_project_dir(self):
+        return self._project_dir.split(os.sep)[-1]
+
+    def build_site(self, data: WebData):
+        data_json = json.dumps(data, sort_keys=True, indent=4, cls=EnhancedJSONEncoder)
+        full_site_dir = os.path.join(self._project_dir, self._site_dir)
+        if not os.path.exists(full_site_dir):
+            os.makedirs(full_site_dir)
+        full_data_json = os.path.join(full_site_dir, self._site_data_json)
+        with open(full_data_json, "w") as fw:
+            fw.writelines(data_json)
+        # TODO copy all files from templates to site via one call
+        # shutil.copyfile(src=os.path.join(full_site_dir, "index.html"), dst=os.path.join(full_site_dir, "index.html"))
+        # shutil.copyfile(src=os.path.join(full_site_dir, "index.js"), dst=os.path.join(full_site_dir, "index.js"))
+        # shutil.copyfile(src=os.path.join(full_site_dir, "index.css"), dst=os.path.join(full_site_dir, "index.css"))
+        # shutil.copyfile(src=os.path.join(full_site_dir, "favicon.svg"), dst=os.path.join(full_site_dir, "favicon.svg"))
+
+        # z = zipimporter.get_filename(fullname="cupidone.templates.index.html")
+
+        files = ["index.html", "index.js", "index.css", "favicon.svg"]
+        for file in files:
+            b = get_data("cupidone", os.path.join(self._templates_dir, file))
+            with open(os.path.join(full_site_dir, file), "wb") as fw:
+                fw.write(b)
+
+        with importlib.resources.path("cupidone.templates", "index.html") as fspath:
+            result = fspath.stat()
+            print(result)
 
 __all__ = ["FileManager"]

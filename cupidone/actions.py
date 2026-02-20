@@ -8,6 +8,7 @@ class Commands(str, enum.Enum):
     BUILD = "build"
     MIGRATE = "migrate"
     DUMP = "dump"
+    SITE = "site"
     HELP = "help"
     VERSION = "version"
 
@@ -16,3 +17,8 @@ class Commands(str, enum.Enum):
 class MigrationOptions(str, enum.Enum):
     TRELLO = "trello"
     VANILLA = "vanilla"
+
+
+@enum.unique
+class SiteOptions(str, enum.Enum):
+    BUILD = "build"

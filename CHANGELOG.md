@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-04-01
+
+### Added
+
+- `build site` subcommand
+
+### Changed
+
+- `build` is subcommand `build TODO`
+
 ## [0.7.0] - 2026-03-25
 
 ### Added
@@ -53,7 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Convert exported `JSON` file from `Trello` to `cupidone` files in `md` format and corresponding data structure
 
-[Unreleased]: https://github.com/vikian050194/cupidone/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/vikian050194/cupidone/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/vikian050194/cupidone/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/vikian050194/cupidone/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/vikian050194/cupidone/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/vikian050194/cupidone/compare/v0.4.0...v0.5.0

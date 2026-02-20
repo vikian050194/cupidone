@@ -114,7 +114,7 @@ attrs = dict(
     license="MIT",
     license_files=["LICENSE"],
     package_data={
-        "cupidone": ["completion/*"]
+        "cupidone": ["completion/*", "templates/*"]
     },
     packages=find_namespace_packages(where=".", exclude=["tests*"], include=["*"]),
     install_requires=[],

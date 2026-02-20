@@ -52,7 +52,7 @@ class TestMain(TestCase):
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 7
+        expected_invocations = 8
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("help")
         mock_print.reset_mock()
@@ -143,6 +143,28 @@ class TestMain(TestCase):
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("vanilla")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_site(self, mock_print):
+        complete = ["complete", "s"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("site")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_site_build(self, mock_print):
+        complete = ["complete", "site", "b"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("build")
         mock_print.reset_mock()
 
     def test_help(self, mock_print):

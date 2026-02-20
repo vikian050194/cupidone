@@ -67,3 +67,9 @@ class CompiledCard():
     checklist: List[CompiledChecklistItem]
     types: List[str]
     created_at: str
+
+@dataclass
+class WebData():
+    title: str
+    build: str
+    cards: list[CompiledCard]
