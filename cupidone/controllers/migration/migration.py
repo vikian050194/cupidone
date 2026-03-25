@@ -8,7 +8,8 @@ from .internal import *
 class MigrationController(CompositeController):
     def __init__(self, fm, tm):
         cs = [
-            MigrationTrelloController(fm, tm)
+            MigrationTrelloController(fm, tm),
+            MigrationVanillaController(fm, tm)
         ]
         super().__init__(fm, tm, cs)
 

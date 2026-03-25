@@ -2,6 +2,8 @@
 
 [![MIT license][license-badge]][license-url]
 [![Maintenance status][status-badge]][status-url]
+[![PyPI version][pypi-badge]][pypi-url]
+[![Downloads per week][downloads-badge]][downloads-url]
 [![Code coverage][coverage-badge]][coverage-url]
 
 ## About
@@ -173,6 +175,12 @@ or
 
 [license-url]: https://github.com/vikian050194/cupidone/blob/master/LICENSE
 [license-badge]: https://img.shields.io/github/license/vikian050194/cupidone.svg
+
+[pypi-url]: https://pypi.org/project/cupidone
+[pypi-badge]: https://img.shields.io/pypi/v/cupidone
+
+[downloads-url]: https://pypi.org/project/cupidone
+[downloads-badge]: https://img.shields.io/pypi/dw/cupidone
 
 [coverage-url]: https://codecov.io/gh/vikian050194/cupidone
 [coverage-badge]: https://img.shields.io/codecov/c/github/vikian050194/cupidone

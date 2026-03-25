@@ -15,3 +15,4 @@ class Commands(str, enum.Enum):
 @enum.unique
 class MigrationOptions(str, enum.Enum):
     TRELLO = "trello"
+    VANILLA = "vanilla"
