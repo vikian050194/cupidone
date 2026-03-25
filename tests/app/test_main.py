@@ -120,18 +120,29 @@ class TestMain(TestCase):
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
-        mock_print.assert_called_with("migration")
+        mock_print.assert_called_with("migrate")
         mock_print.reset_mock()
 
     # TODO move to unit tests
     def test_complete_migration_trello(self, mock_print):
-        complete = ["complete", "migration", "t"]
+        complete = ["complete", "migrate", "t"]
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("trello")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_migration_vanilla(self, mock_print):
+        complete = ["complete", "migrate", "v"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("vanilla")
         mock_print.reset_mock()
 
     def test_help(self, mock_print):

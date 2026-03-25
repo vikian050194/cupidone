@@ -190,6 +190,9 @@ class ProjectModel(AbstractModel):
     def read_json(self, filename:str):
         return self.fm.read_json(filename)
 
+    def read_lines(self, filename:str):
+        return self.fm.read_lines(filename)
+
     def dump(self):
         cards = self._list_cards()
         return ListView(list=cards)

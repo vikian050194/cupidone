@@ -6,7 +6,7 @@ class Commands(str, enum.Enum):
     INIT = "init"
     ADD = "add"
     BUILD = "build"
-    MIGRATION = "migration"
+    MIGRATE = "migrate"
     DUMP = "dump"
     HELP = "help"
     VERSION = "version"
@@ -15,3 +15,4 @@ class Commands(str, enum.Enum):
 @enum.unique
 class MigrationOptions(str, enum.Enum):
     TRELLO = "trello"
+    VANILLA = "vanilla"

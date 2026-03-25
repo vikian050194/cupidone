@@ -1,2 +1,2 @@
 from .internal import *
-from .migration import *
+from .migrate import *

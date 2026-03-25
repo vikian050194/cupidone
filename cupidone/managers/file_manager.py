@@ -94,5 +94,9 @@ class FileManager(AbstractFileManager):
         with open(filename, "r") as fr:
             return json.load(fr)
 
+    def read_lines(self, filename: str):
+        with open(filename, "r") as fr:
+            return fr.read().splitlines()
+
 
 __all__ = ["FileManager"]

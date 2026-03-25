@@ -5,15 +5,16 @@ from ..composite import CompositeController
 from .internal import *
 
 
-class MigrationController(CompositeController):
+class MigrateController(CompositeController):
     def __init__(self, fm, tm):
         cs = [
-            MigrationTrelloController(fm, tm)
+            MigrationTrelloController(fm, tm),
+            MigrationVanillaController(fm, tm)
         ]
         super().__init__(fm, tm, cs)
 
     def keys(self):
-        return [Commands.MIGRATION]
+        return [Commands.MIGRATE]
 
 
-__all__ = ["MigrationController"]
+__all__ = ["MigrateController"]

@@ -15,7 +15,7 @@ class HelpController(AbstractController):
         lines.append((Commands.INIT.value, "to init new project"))
         lines.append((Commands.ADD.value, "to add new empty card"))
         lines.append((Commands.BUILD.value, "to build TODO.md"))
-        lines.append((Commands.MIGRATION.value, "to migrate items"))
+        lines.append((Commands.MIGRATE.value, "to migrate items"))
         lines.append((Commands.VERSION.value, "get version"))
         lines.append((Commands.HELP.value, "get help"))
         return ListView(lines)
