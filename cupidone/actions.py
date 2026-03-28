@@ -8,7 +8,6 @@ class Commands(str, enum.Enum):
     BUILD = "build"
     MIGRATE = "migrate"
     DUMP = "dump"
-    SITE = "site"
     HELP = "help"
     VERSION = "version"
 
@@ -20,5 +19,6 @@ class MigrationOptions(str, enum.Enum):
 
 
 @enum.unique
-class SiteOptions(str, enum.Enum):
-    BUILD = "build"
+class BuildOptions(str, enum.Enum):
+    TODO = "todo"
+    SITE = "site"

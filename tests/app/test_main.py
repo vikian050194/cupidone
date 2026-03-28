@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import call, patch
 from tempfile import TemporaryDirectory
 
 from cupidone.main import main
@@ -52,7 +52,7 @@ class TestMain(TestCase):
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 8
+        expected_invocations = 7
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("help")
         mock_print.reset_mock()
@@ -77,17 +77,6 @@ class TestMain(TestCase):
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("help")
-        mock_print.reset_mock()
-
-    # TODO move to unit tests
-    def test_complete_build(self, mock_print):
-        complete = ["complete", "b"]
-
-        self.call(complete)
-        actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 1
-        self.assertEqual(actual_invocations, expected_invocations)
-        mock_print.assert_called_with("build")
         mock_print.reset_mock()
 
     # TODO move to unit tests
@@ -146,25 +135,48 @@ class TestMain(TestCase):
         mock_print.reset_mock()
 
     # TODO move to unit tests
-    def test_complete_site(self, mock_print):
-        complete = ["complete", "s"]
-
-        self.call(complete)
-        actual_invocations = len(mock_print.call_args_list)
-        expected_invocations = 1
-        self.assertEqual(actual_invocations, expected_invocations)
-        mock_print.assert_called_with("site")
-        mock_print.reset_mock()
-
-    # TODO move to unit tests
-    def test_complete_site_build(self, mock_print):
-        complete = ["complete", "site", "b"]
+    def test_complete_build(self, mock_print):
+        complete = ["complete", "b"]
 
         self.call(complete)
         actual_invocations = len(mock_print.call_args_list)
         expected_invocations = 1
         self.assertEqual(actual_invocations, expected_invocations)
         mock_print.assert_called_with("build")
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_build_subcommands(self, mock_print):
+        complete = ["complete", "build"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 2
+        self.assertEqual(actual_invocations, expected_invocations)
+        self.assertEqual(mock_print.call_args_list[0], call("todo"))
+        self.assertEqual(mock_print.call_args_list[1], call("site"))
+        mock_print.reset_mock()
+
+    # TODO move to unit tests
+    def test_complete_build_todo(self, mock_print):
+        complete = ["complete", "build", "t"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("todo")
+        mock_print.reset_mock()
+
+            # TODO move to unit tests
+    def test_complete_build_site(self, mock_print):
+        complete = ["complete", "build", "s"]
+
+        self.call(complete)
+        actual_invocations = len(mock_print.call_args_list)
+        expected_invocations = 1
+        self.assertEqual(actual_invocations, expected_invocations)
+        mock_print.assert_called_with("site")
         mock_print.reset_mock()
 
     def test_help(self, mock_print):

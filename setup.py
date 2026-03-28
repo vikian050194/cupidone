@@ -85,7 +85,7 @@ def readme():
 
 attrs = dict(
     name="cupidone",
-    version="0.7.0",
+    version="0.8.0",
     description="CLI to-do list manager",
     keywords=["cli", "markdown"],
     long_description=readme(),

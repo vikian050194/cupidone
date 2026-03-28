@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- `build` is subcommand `build TODO`
+- `build` is subcommand `build todo`
 
 ## [0.7.0] - 2026-03-25
 

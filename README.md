@@ -61,7 +61,7 @@ pip install -e .
 
 ## Usage
 
-In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTIONS] [VALUE]`
+In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTION] [VALUE]`
 
 ### Help
 
@@ -76,25 +76,30 @@ Format: `cupidone [COMMAND]`
 
 Format: `cupidone init`
 
-This command creates `TODO.md` and empty `todo` directory
+To create `TODO.md` and empty `todo` directory
 
 ### Add
 
 Format: `cupidone add`
 
-This command creates new empty card in the `todo` directory
+To create new empty card in the `todo` directory
 
 ### Build
 
-Format: `cupidone build`
+Format: `cupidone build [OPTION]`
 
-This command (re)builds `TODO.md` according to the cards from `todo` directory
+To (re)builds `TODO.md` according to the cards from `todo` directory
+
+| Option | Description |
+| --- | --- |
+| `todo` | `TODO.md` file |
+| `site` | Static site that is kanban-like board stored in `site` directory |
 
 ### Dump
 
 Format: `cupidone dump`
 
-This command dump all cards from `todo` directory
+To dump all cards from `todo` directory
 
 ### Migrate
 
