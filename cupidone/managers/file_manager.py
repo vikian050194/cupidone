@@ -1,10 +1,11 @@
 import abc
 import json
 import os
-from pkgutil import get_data
 import re
 
 from datetime import datetime
+from pkgutil import get_data
+
 from typing import Any, Dict, List
 
 from cupidone.card import Card
@@ -115,6 +116,7 @@ class FileManager(AbstractFileManager):
         full_data_json = os.path.join(full_site_dir, self._site_data_json)
         with open(full_data_json, "w") as fw:
             fw.writelines(data_json)
+
         # TODO copy all files from templates to site via one call
         # shutil.copyfile(src=os.path.join(full_site_dir, "index.html"), dst=os.path.join(full_site_dir, "index.html"))
         # shutil.copyfile(src=os.path.join(full_site_dir, "index.js"), dst=os.path.join(full_site_dir, "index.js"))

@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from cupidone.common import *
 from cupidone.common import dt_to_iso
@@ -197,13 +197,13 @@ class ProjectModel(AbstractModel):
         cards = self._list_cards()
         return ListView(list=cards)
 
-    def build_site(self):
+    def build_site(self, title: Optional[str]):
         build = dt_to_iso(self.tm.get_datetime())
-        title = self.fm.get_project_dir()
+        site_title = title or self.fm.get_project_dir()
         cards = self._list_cards()
         data = WebData(
             build=build,
-            title=title,
+            title=site_title,
             cards=cards
         )
         self.fm.build_site(data)
