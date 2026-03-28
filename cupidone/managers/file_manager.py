@@ -1,5 +1,4 @@
 import abc
-import importlib
 import json
 import os
 from pkgutil import get_data
@@ -130,8 +129,9 @@ class FileManager(AbstractFileManager):
             with open(os.path.join(full_site_dir, file), "wb") as fw:
                 fw.write(b)
 
-        with importlib.resources.path("cupidone.templates", "index.html") as fspath:
-            result = fspath.stat()
-            print(result)
+        # import importlib
+        # with importlib.resources.path("cupidone.templates", "index.html") as fspath:
+        #     result = fspath.stat()
+        #     print(result)
 
 __all__ = ["FileManager"]

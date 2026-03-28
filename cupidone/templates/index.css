@@ -79,6 +79,7 @@ footer {
 
 .modal-container {
     position: relative;
+    background: white;
     padding: 8px;
     border: 1px dotted gray;
 }
