@@ -16,13 +16,13 @@ class JsonPrinter(BasePrinter):
         self.print_object(message)
 
     def print_object(self, object):
-        self.__print__(json.dumps(object, sort_keys=True, indent=4, cls=EnhancedJSONEncoder))
+        self._print(json.dumps(object, sort_keys=True, indent=4, cls=EnhancedJSONEncoder))
 
     def print_message(self, message):
         self.print_object(message)
 
     def print_list(self, list):
-        self.__print__(json.dumps(list, sort_keys=True, indent=4, cls=EnhancedJSONEncoder))
+        self._print(json.dumps(list, sort_keys=True, indent=4, cls=EnhancedJSONEncoder))
 
 
 __all__ = ["JsonPrinter"]

@@ -19,7 +19,7 @@ def to_str(value):
 
 
 class BasePrinter():
-    def __print__(self, message):
+    def _print(self, message):
         builtins.print(message)
 
     def print_str(self, message: str):
