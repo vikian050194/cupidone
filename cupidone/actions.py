@@ -16,3 +16,9 @@ class Commands(str, enum.Enum):
 class MigrationOptions(str, enum.Enum):
     TRELLO = "trello"
     VANILLA = "vanilla"
+
+
+@enum.unique
+class BuildOptions(str, enum.Enum):
+    TODO = "todo"
+    SITE = "site"

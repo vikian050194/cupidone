@@ -85,7 +85,7 @@ def readme():
 
 attrs = dict(
     name="cupidone",
-    version="0.7.0",
+    version="0.8.0",
     description="CLI to-do list manager",
     keywords=["cli", "markdown"],
     long_description=readme(),
@@ -114,7 +114,7 @@ attrs = dict(
     license="MIT",
     license_files=["LICENSE"],
     package_data={
-        "cupidone": ["completion/*"]
+        "cupidone": ["completion/*", "templates/*"]
     },
     packages=find_namespace_packages(where=".", exclude=["tests*"], include=["*"]),
     install_requires=[],

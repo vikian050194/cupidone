@@ -1,8 +1,8 @@
-from typing import List
+from typing import List, Optional
 
 from cupidone.common import *
 from cupidone.common import dt_to_iso
-from cupidone.dc import CompiledCard, CompiledChecklistItem
+from cupidone.dc import CompiledCard, CompiledChecklistItem, WebData
 from cupidone.views.base import AbstractView, ListView
 from cupidone.views.message import ErrorView, InfoView
 
@@ -197,5 +197,16 @@ class ProjectModel(AbstractModel):
         cards = self._list_cards()
         return ListView(list=cards)
 
+    def build_site(self, title: Optional[str]):
+        build = dt_to_iso(self.tm.get_datetime())
+        site_title = title or self.fm.get_project_dir()
+        cards = self._list_cards()
+        data = WebData(
+            build=build,
+            title=site_title,
+            cards=cards
+        )
+        self.fm.build_site(data)
+        return InfoView("done")
 
 __all__ = ["ProjectModel"]

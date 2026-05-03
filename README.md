@@ -61,7 +61,7 @@ pip install -e .
 
 ## Usage
 
-In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTIONS] [VALUE]`
+In general invocation has following format `cupidone [COMMAND] [SUBCOMMAND] [OPTION] [VALUE]`
 
 ### Help
 
@@ -76,25 +76,30 @@ Format: `cupidone [COMMAND]`
 
 Format: `cupidone init`
 
-This command creates `TODO.md` and empty `todo` directory
+To create `TODO.md` and empty `todo` directory
 
 ### Add
 
 Format: `cupidone add`
 
-This command creates new empty card in the `todo` directory
+To create new empty card in the `todo` directory
 
 ### Build
 
-Format: `cupidone build`
+Format: `cupidone build [OPTION]`
 
-This command (re)builds `TODO.md` according to the cards from `todo` directory
+To (re)builds `TODO.md` according to the cards from `todo` directory
+
+| Option | Description |
+| --- | --- |
+| `todo` | `TODO.md` file |
+| `site` | Static site that is kanban-like board stored in `site` directory |
 
 ### Dump
 
 Format: `cupidone dump`
 
-This command dump all cards from `todo` directory
+To dump all cards from `todo` directory
 
 ### Migrate
 
@@ -108,6 +113,60 @@ Format: `cupidone migrate [OPTION] [VALUE]`
 | `vanilla` | Vanilla markdown as source |
 
 One value is required - path to exported `JSON` file
+
+**trello**
+
+Your exported data may contains same columns and/or labels or any subset of it.
+
+List of columns:
+
+- "backlog"
+- "to do"
+- "in progress"
+- "done"
+- "outdated"
+
+List of labels:
+
+- "bug"
+- "tech"
+- "business"
+- "marketing"
+
+Trello card could contain more than one checklist, but only first checklist will be converted and remaining checklists will be ignored.
+
+**vanilla**
+
+Example of `TODO.md` to explain all cases at once.
+
+```md
+# TODO
+
+## Todo
+
+- [x] Make a repository
+- [x] Make project template
+- [x] Add directory selector
+  - [x] Show dialog
+  - [x] Show selected directory name
+- [ ] ~~Migrate to Web API~~
+- [ ] Hide system directories by default
+- [ ] Tag photos
+  - [x] Add tag
+  - [ ] Remove tag
+- [ ] Save photo rotation
+- [ ] Directories tree
+
+## Backlog
+
+- [ ] Copy file name
+  - [ ] Name
+  - [ ] Relative path
+  - [ ] Absolute path
+- [ ] Logical AND
+- [ ] ~~Rename file~~
+- [ ] Manual date setting
+```
 
 ### Configuration
 
